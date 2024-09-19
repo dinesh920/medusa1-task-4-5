@@ -23,7 +23,7 @@ jobs:
       # Install dependencies on the EC2 instance
       - name: Install dependencies
         run: |
-          ssh -o StrictHostKeyChecking=no ubuntu@34.229.194.183 sudo apt update
+          ssh -o StrictHostKeyChecking=no ubuntu@98.81.144.14 sudo apt update
 
       # Install Node.js on the EC2 instance
       - name: Install Node.js
