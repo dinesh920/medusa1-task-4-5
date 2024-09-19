@@ -23,24 +23,24 @@ jobs:
       # Install dependencies on the EC2 instance
       - name: Install dependencies
         run: |
-          ssh -o StrictHostKeyChecking=no ubuntu@98.81.144.14 sudo apt update
+          ssh -o StrictHostKeyChecking=no ubuntu@54.152.24.61  sudo apt update
 
       # Install Node.js on the EC2 instance
       - name: Install Node.js
         run: |
-          ssh -o StrictHostKeyChecking=no ubuntu@98.81.144.14 'curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash - && sudo apt-get install -y nodejs'
+          ssh -o StrictHostKeyChecking=no ubuntu@54.152.24.61 'curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash - && sudo apt-get install -y nodejs'
 
       # Create the destination directory on EC2
       - name: Create destination directory on EC2
         run: |
-          ssh -o StrictHostKeyChecking=no ubuntu@98.81.144.14 'sudo mkdir -p /home/ubuntu/medusa-gitaction && sudo chown ubuntu:ubuntu /home/ubuntu/medusa-gitaction'
+          ssh -o StrictHostKeyChecking=no ubuntu@54.152.24.61  'sudo mkdir -p /home/ubuntu/medusa-gitaction && sudo chown ubuntu:ubuntu /home/ubuntu/medusa-gitaction'
 
       # Use rsync to copy project files to EC2, excluding node_modules and logs
       - name: Copy project files to EC2 with rsync
         run: |
-          rsync -avz --exclude 'node_modules' --exclude 'logs' ./ ubuntu@98.81.144.14:/home/ubuntu/medusa-gitaction/
+          rsync -avz --exclude 'node_modules' --exclude 'logs' ./ ubuntu@54.152.24.61 :/home/ubuntu/medusa-gitaction/
 
       # Install project dependencies inside a tmux session and restart Medusa
       - name: Install dependencies and restart Medusa on EC2
         run: |
-          ssh -o StrictHostKeyChecking=no ubuntu@98.81.144.14 'tmux new -d -s medusa_session "cd /home/ubuntu/medusa-gitaction && NODE_OPTIONS=\"--max-old-space-size=4096\" npm install && pm2 restart medusa"'
+          ssh -o StrictHostKeyChecking=no ubuntu@54.152.24.61  'tmux new -d -s medusa_session "cd /home/ubuntu/medusa-gitaction && NODE_OPTIONS=\"--max-old-space-size=4096\" npm install && pm2 restart medusa"'
