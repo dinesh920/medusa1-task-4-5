@@ -35,10 +35,9 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no ubuntu@54.152.24.61  'sudo mkdir -p /home/ubuntu/medusa-gitaction && sudo chown ubuntu:ubuntu /home/ubuntu/medusa-gitaction'
 
-      # Use rsync to copy project files to EC2, excluding node_modules and logs
       - name: Copy project files to EC2 with rsync
         run: |
-          rsync -avz --exclude 'node_modules' --exclude 'logs' ./ ubuntu@54.152.24.61 :/home/ubuntu/medusa-gitaction/
+           rsync -avz --exclude 'node_modules' --exclude 'logs' ./ ubuntu@54.152.24.61:/home/ubuntu/medusa-gitaction/
 
       # Install project dependencies inside a tmux session and restart Medusa
       - name: Install dependencies and restart Medusa on EC2
