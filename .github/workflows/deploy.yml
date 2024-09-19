@@ -44,6 +44,3 @@ jobs:
       - name: Install dependencies and restart Medusa on EC2
         run: |
           ssh -o StrictHostKeyChecking=no ubuntu@98.81.144.14 'cd /home/ubuntu/medusa-gitaction && NODE_OPTIONS="--max-old-space-size=4096" npm install && pm2 restart medusa'
-
-        run: |
-          ssh -o StrictHostKeyChecking=no ubuntu@98.81.144.143 'cd /home/ubuntu/medusa-gitaction && NODE_OPTIONS="--max-old-space-size=4096" npm install && pm2 restart medusa'
