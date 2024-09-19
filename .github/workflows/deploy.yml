@@ -40,7 +40,7 @@ jobs:
         run: |
           rsync -avz --exclude 'node_modules' --exclude 'logs' ./ ubuntu@98.81.144.14:/home/ubuntu/medusa-gitaction/
 
-      # Install project dependencies with increased memory limit and restart Medusa on EC2
+      # Install project dependencies inside a tmux session and restart Medusa
       - name: Install dependencies and restart Medusa on EC2
         run: |
-          ssh -o StrictHostKeyChecking=no ubuntu@98.81.144.14 'cd /home/ubuntu/medusa-gitaction && NODE_OPTIONS="--max-old-space-size=4096" npm install && pm2 restart medusa'
+          ssh -o StrictHostKeyChecking=no ubuntu@98.81.144.14 'tmux new -d -s medusa_session "cd /home/ubuntu/medusa-gitaction && NODE_OPTIONS=\"--max-old-space-size=4096\" npm install && pm2 restart medusa"'
